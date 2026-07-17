@@ -1,0 +1,252 @@
+.logo img {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 12rem;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  height: 75px;
+  border: 1px solid ;
+  border-top: #ffffff;
+}
+
+.navbar .logo img {
+  height: 70px;
+  width: auto;
+}
+
+.nav-links a {
+  color: #2e7d32;                      /* green */
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.25s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(46, 125, 50, 0.12); /* soft green bg */
+  color: #1aaa52;
+  transform: translateY(-2px);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  background-color: rgb(32, 106, 47);
+  padding: 3.2rem 7rem ;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 3rem;
+  height: 10rem;
+}
+
+.title h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: white;
+}
+
+.material-symbols-outlined {
+color: white;
+height: 30%;
+}
+
+#contactus {
+  border-collapse: collapse;
+  background-color: #faf3ec;
+  border-radius: 7px;
+  width:40%;
+  padding: auto;
+  box-shadow: 4px 2px 2px #1e4d2b2c;
+}
+
+#contactus:hover{
+  border-color: #1e4d2b;
+  box-shadow: 0 4px 18px #679267;
+}
+
+h3{
+  color: #679267;
+  text-shadow:2px 2px  #1e4d2b30 ;
+}
+
+::placeholder{color: #7ca07c;}
+
+
+.contact-container { 
+    margin: 2rem auto;
+    padding: 3rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-container > * {
+    margin: 1rem 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #1e4d2b;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group label {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 90%;
+    margin: 0 auto; /* centers items */
+    display: block;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color: #679267;
+    outline: none; /* Remove default blue outline */
+    box-shadow: 0 0 0 3px rgba(33, 84, 48, 0.2); /* Green glow effect */
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+#submit {
+    background: #1e4d2b;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: auto;
+    display: block;
+    margin: 1rem auto 0 auto;
+}
+
+#submit:hover {
+    background: #679267;
+}
+
+.errors {
+    color: #e74c3c;
+    background: #fdf2f2;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e74c3c;
+    display: none;
+}
+
+#about{
+    padding: min(2em,4%);
+    overflow-wrap: break-word;
+    max-width: 80%;
+    box-sizing: border-box;
+    word-break: normal;
+    box-shadow: 0 4px 18px 0 #67926769;
+    border-radius: 7px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%; 
+    text-align: left; /* keeps content LTR */
+    direction: ltr;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*{
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+mark{
+  background-color: #67926715;
+  border-radius: 2px;
+  color: #1e4d2b;
+
+}
+body {
+  overflow: hidden; /* to prevent scrollbars */
+  position: relative; 
+}
+
+footer {
+  border: 2px solid ;
+  color: #1e4d2b;
+  border-radius: 7px;
+  background: #67926755;;
+}
+
+@media print {
+  footer, .navbar{
+    display: none;
+  }
+  #contactus{
+    width: 50%;
+  }
+}
+
+/* responsiveness */
+@media (max-width: 700px) {
+    .contact-container {
+        padding: 1rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+
+}
+
+/* tablet responsiveness */
+@media (max-width: 1024px) {
+    .contact-container {
+        max-width: 90%;
+    }
+}
+
+.box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+  }
+a{
+  color: #2e7d32;
+  }

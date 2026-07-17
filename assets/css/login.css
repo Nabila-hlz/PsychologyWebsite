@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif, Arial, Helvetica;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+   /* background-color: rgb(244, 248, 224);*/
+   background-image: url(../images/grin.jpg) ;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+   background-attachment: fixed;
+
+}
+
+.logo {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+}
+
+.form {
+    background-color: rgb(255, 255, 255);
+    padding: 2rem 4rem;
+    border-radius: 1rem;
+    border-color: black;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.form h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 1rem;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 21rem;
+}
+
+.email label {
+    color: #000000;
+}
+
+.email input {
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 0.6rem;
+    border: 1.7px solid #53c839;
+    outline: none;
+    /* remove the default blue outline */
+    transition: border 0.3ms ease;
+
+}
+
+.email input::placeholder {
+    color: #35941f;
+}
+
+.email input:focus {
+    border: 3px solid #53c839;
+}
+
+.password {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+}
+
+.password label {
+    color: #040404;
+
+}
+
+.password input {
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 0.6rem;
+    border: 1.7px solid #53c839;
+    outline: none;
+    transition: border 0.3ms ease;
+}
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; 
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 15px;          
+  top: 55%;         
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;         
+  font-size: 1rem;      
+}
+
+
+.password input::placeholder {
+    color: #35941f;
+}
+
+.password input:focus {
+    border: 3px solid #53c839;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.remember-forgot input[type="checkbox"] {
+    accent-color: #007bff;
+    /* modern way to change color */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+
+}
+
+.remember-forgot a {
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.remember-forgot a:hover {
+    color: #35941f;
+    text-decoration: underline;
+}
+
+.login {
+    background-color: #35941f;
+    color: white;
+    border-radius: 3rem;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.login:hover {
+    opacity: 0.7;
+}
+
+.login:active {
+    background-color: #174b0b;
+}
+
+.register {
+    text-align: center;
+    font-size: 14px;
+    color: #000000;
+}
+
+.register a {
+    color: #1f8308;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register a:hover {
+    color: #35941f;
+    text-decoration: underline;
+
+}

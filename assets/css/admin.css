@@ -1,0 +1,223 @@
+/* GENERAL */
+body {
+  margin: 0;
+  padding: 0;
+  background: #e8f0ea;
+  font-family: Arial, sans-serif;
+}
+
+.material-symbols-outlined {
+  vertical-align: middle;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-right .material-symbols-outlined {
+  font-size: 32px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.header-right .material-symbols-outlined:hover {
+  transform: scale(1.15);
+}
+/* GRID LAYOUT */
+.grid-container {
+  display: grid;
+  grid-template-columns: 260px auto;
+  grid-template-rows: 70px auto;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+  height: 100vh;
+}
+
+/* HEADER */
+.header {
+  grid-area: header;
+  background: #6ca574;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.header-title {
+  letter-spacing: 1px;
+}
+
+.menu-icon {
+  display: none;
+}
+
+/* SIDEBAR */
+#sidebar {
+  grid-area: sidebar;
+  background: #ffffff;
+  padding: 25px 0;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.1);
+  position: relative;
+  transition: all .4s ease;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 22px;
+  color: #6ca574;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo-icon {
+  color: #6ca574;
+  font-size: 28px;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.sidebar-item {
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.sidebar-item:hover {
+  background: #e9f5ec;
+}
+
+.sidebar-item.active {
+  background: #d7eedc;
+  font-weight: 600;
+}
+
+.close-sidebar {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+/* MAIN */
+.main-container {
+  grid-area: main;
+  padding: 25px;
+  overflow-y: auto;
+  min-height: calc(100vh - 70px);
+}
+
+/* CARDS */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  transition: transform .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  font-size: 50px;
+  color: #6ca574;
+}
+
+/* CHARTS */
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.chart-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+/* TABLES and SECTION styling */
+.section h2 {
+  margin: 0 0 12px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Buttons */
+.btn {
+  padding: 6px 10px;
+  margin: 2px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.view-btn { border: 1px solid #1666f0; color: #1666f0; background: transparent; }
+.view-btn:hover { background: #1666f0; color: #fff; }
+
+.delete-btn { border: 1px solid #fa3e3e; color: #fa3e3e; background: transparent; }
+.delete-btn:hover { background: #fa3e3e; color: #fff; }
+
+.verify-btn { border: 1px solid #16c918; color: #16c918; background: transparent; }
+.verify-btn:hover { background: #16c918; color: #fff; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cards-container { grid-template-columns: 1fr; }
+  .charts { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  body { grid-template-columns: 1fr; grid-template-areas: "main"; }
+  #sidebar { position: absolute; transform: translateX(-260px); }
+  .menu-icon { display: block; }
+  .close-sidebar { display: block; }
+  .card, .chart-card { width: 100%; }
+  .cards-container { display: block; }
+}
+
+
