@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>About us | InnerBloom</title>
+<link rel="icon" type="x-icon" href="../assets/images/logoNo.png">
+<meta charset="UTF-8">
+<meta name="psychology web site" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<link rel="stylesheet" href="../assets/css/about.css">
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="InnerBloom logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.php">Home</a>
+                <a href="#" id="dashboard-link" class="dashboard-btn" style="display: none;" >Dashboard</a>
+                <a href="#" class="articles-btn" id="articleslink" style="display: none;" >Articles</a>
+                <a href="#" class="videos-btn" id="videoslink" style="display: none;">Videos</a>
+                <a href="#" class="log-btn" id="loglink" style="display: none;">Log in/out</a>
+                <a href="therapist.php">Therapist</a>
+                <a href="about.html">About us</a>
+            </div>
+        </nav>
+    </header>
+    <div class="title">
+        <span class="material-symbols-outlined">text_ad</span>
+        <pre> <h1> About InnerBloom </h1>  </pre>
+    </div>
+
+    <div id="abouttitle">
+   <br><br><br><br>
+    </div>
+    <div id="about"> Welcome to Inner Bloom — a sanctuary for growth, healing, and transformation. <br>
+        We are an online platform committed to helping you nurture your inner world, overcome challenges, and step into
+        your fullest potential.
+        <center> <img src="../assets/images/greensessions.png" alt="psychologist session picture" width="50%"
+                height="auto"></center>
+
+
+        At Inner Bloom, we bring together a team of compassionate psychologists, licensed therapists, and
+        growth-oriented content creators. <br>
+        We believe that everyone deserves access to high‑quality mental health and self-development support—no matter
+        where they are in life.<br>
+        Our vision is to create a safe, non‑judgmental space where you can explore your thoughts, emotions, and life
+        journey with expert guidance
+        and caring community support.<br>
+        <br>
+        <br>
+        <br>
+        <ul>
+            &#10004; <mark> Easy Access to Professional Help.</mark> No need to travel or wait for appointments — get
+            connected with licensed psychologists from the comfort of your home.<br>
+
+            &#10004; <mark> Flexible Scheduling.</mark> Book sessions anytime whether it’s during a lunch break, after
+            work, or on weekends.<br>
+
+            &#10004; <mark> Personalized MatchChoose.</mark> Choose the psychologist who best fits your needs,
+            preferences, and communication style.<br>
+
+            &#10004; <mark> Comfort & Convenience.</mark> Talk openly from your safe space — your room, your phone, your
+            pace.<br>
+
+            &#10004; <mark> Variety of Specialties.</mark> Find experts in anxiety, depression, stress management,
+            relationships, self-esteem, and more.<br>
+
+            &#10004; <mark> Continuous Support.</mark> You can stay in touch with your psychologist through messages or
+            follow-up sessions for ongoing guidance.<br>
+
+            &#10004; <mark> Secure & Confidential.</mark> Your privacy is our priority. All sessions are encrypted and
+            fully confidential.<br>
+        </ul>
+    </div>
+
+    <div class="contact-container">
+    <h2>Contact us</h2>
+    <div id="contactus">
+        <form action="http://localhost/innerbloom/assets/php/about.php" method="POST" id="contactForm">
+            <input type="hidden" name="access_key" value="e3e6471c-71d3-46d6-a1fc-210654cec686">
+            <br>
+            <div id="errors" class="errors"></div>
+            
+            <!-- Name fields side by side on desktop, stacked on mobile -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fname">First name</label>
+                    <input type="text" id="fname" name="first_name" placeholder="Your first name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last name</label>
+                    <input type="text" id="lname" name="last_name" placeholder="Your family name" required>
+                </div>
+            </div>
+
+            <!-- Email field -->
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="email@gmail.com" required>
+                
+            </div>
+
+            <!-- message field -->
+            <div class="form-group">
+                <label for="message">Your message</label>
+                <textarea id="message" name="message" placeholder="Enter your question or message" rows="5" required></textarea>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-group">
+                <input id="submit" type="submit" value="Submit">
+            </div>
+            <div id="response"></div>
+        </form>
+    </div>
+</div>
+   <script src="../assets/js/about.js"></script>
+<br>
+<br>
+<br>
+
+    <footer>
+        <center>
+            <table>
+                <tr>
+                    <td><img src="../assets/images/footerpic.png" alt="InnerBloom Logo" height="70"></td>
+                    <td rowspan="2">
+                        <pre>
+        Need help ?
+        ✆Call us at <a href="tel:+213674674674">+213 674 674 674</a>
+        📧mail us <a href="mailto::innerbloomdz@email.com">innerbloomdz@gmail.com</a>
+        available Sunday - Thursday, 09:00 am - 06:00pm 
+    </pre>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </footer>
+
+<script src="../assets/php/role.php"></script>
+<script>
+console.log("Role:", userRole, "ID:", userId, "Logged:", loggedIn);
+
+if (userId && userRole) {
+    // Set correct dashboard URL
+    let artUrl = '';
+    let vidUrl = '';
+    let dashboardUrl = '';
+    let logUrl = '';
+    switch(userRole) {
+        case 'admin':   {dashboardUrl = '../assets/php/admin_dashboard.php';
+                        artUrl = '../assets/php/article.php'; 
+                        vidUrl = '../assets/php/video.php';
+                        logUrl = '../assets/php/logout.php';
+                        break;}
+        case 'therapist':   {dashboardUrl = '../src/psychologist.html';
+                            artUrl = '../assets/php/article.php'; 
+                            vidUrl = '../assets/php/video.php';
+                            logUrl = '../assets/php/logout.php';
+                            break;}
+        case 'user':    {artUrl = '../assets/php/article.php'; 
+                        vidUrl = '../assets/php/video.php';
+                        dashboardUrl = '../src/user_dashboard.html';
+                        logUrl = '../assets/php/logout.php';
+                        break;}
+        default:    {artUrl = '../src/loginPage.php'; 
+                    vidUrl = '../src/loginPage.php';
+                    videoUrl = '../src/loginPage.php';
+                    logUrl = '../src/loginPage';
+                    break;}
+    }
+    const logLink = document.getElementById('loglink');
+    logLink.href = logUrl;
+    logLink.style.display = 'inline';
+
+    const dashboardLink = document.getElementById('dashboard-link');
+    dashboardLink.href = dashboardUrl;
+    dashboardLink.style.display = 'inline';
+
+    const videoslink = document.getElementById('videoslink');
+    videoslink.href = vidUrl;
+    videoslink.style.display = 'inline';
+    
+    const articleslink = document.getElementById('articleslink');
+    articleslink.href = artUrl;
+    articleslink.style.display = 'inline';
+} 
+else exit;
+</script>
+
+</body>
+</html>

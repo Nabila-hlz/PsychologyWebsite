@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="x-icon" href="../assets/images/logoNo.png">
+  <title>User Dashboard | InnerBloom</title>
+
+  <!-- Bootstrap, Icons, Chart.js -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+
+    :root{
+      --mint: #86b77b;
+      --muted: #6b7280;
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --glass: rgba(255,255,255,0.85);
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(16,24,40,0.06);
+      --text-dark: #0b1220;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Arial , Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+      background:var(--bg);
+      color:var(--text-dark);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+   
+    .app {
+      display:flex;
+      gap:20px;
+      padding:28px;
+      align-items:flex-start;
+    }
+    @media (max-width: 992px){ .app{flex-direction:column;padding:14px} .sidebar{position:relative;height:auto} }
+
+    /* Sidebar */
+    .sidebar{
+      width:250px;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+      flex-shrink:0;
+      position:sticky;
+      top:28px;
+      height:calc(100vh - 56px);
+      margin-top: 60px;
+    }
+    .brand{font-weight:700;color:var(--mint);font-size:18px}
+    .sidebar .small-muted{color:var(--muted);font-size:13px}
+    .nav-link.clean{
+      display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;color:#24303a;text-decoration:none;font-weight:600;
+    }
+    .nav-link.clean .bi{font-size:18px}
+    .nav-link.clean:hover{background:linear-gradient(90deg, rgba(0,184,148,0.06), rgba(0,184,148,0.03));transform:translateY(-2px)}
+    .nav-link.clean.active{background:var(--mint);color:#fff;box-shadow:0 8px 30px rgba(0,184,148,0.12)}
+
+    /* Main */
+    .content{flex:1;min-width:0}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px;}
+    .small-muted{color:var(--muted);font-size:13px}
+
+    /* Cards */
+    .card-clean{
+      background:var(--card);
+      border-radius:14px;
+      padding:14px;
+      box-shadow:var(--shadow);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .card-clean:hover{transform:translateY(-4px)}
+    .stat{
+      border-radius:11px;
+      padding:14px;
+      min-width:132px;
+      text-align:left;
+      background:linear-gradient(180deg, rgba(0,184,148,0.06), rgba(0,184,148,0.02));
+    }
+    .stat h3{margin:0;font-size:20px;font-weight:700;color:var(--text-dark)}
+    .stat p{margin:0;color:var(--muted);font-size:13px}
+
+  
+    .table thead th{border-bottom:0;color:var(--muted);font-weight:700;font-size:13px}
+    .badge-status{font-weight:700;padding:.35rem .6rem;border-radius:999px;font-size:.78rem}
+    .badge-status.pending{background:#fff4e6;color:#b06b00}
+    .badge-status.confirmed{background:#e8f9ef;color:#0b8a4a}
+    .badge-status.completed{background:#eef7ff;color:#1e6fb3}
+
+    /* Buttons */
+    .btn-sm {padding:.35rem .6rem;font-size:.85rem}
+
+    /* Avatar */
+    .avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,0,0,0.04)}
+
+    /* Modal tweaks */
+    .modal-content{border-radius:12px}
+
+    /* Tiny helpers */
+    .muted { color:var(--muted); font-size:13px }
+    .gap-12{gap:12px;display:flex;align-items:center}
+
+   /* .logo img {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 12rem;
+}*/
+
+/* NAVBAR RESET */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 1000;
+}
+
+/* LOGO */
+.navbar .logo img {
+    height: 60px;
+    width: auto;
+}
+
+/* LINKS */
+.nav-links {
+    display: flex;
+    gap: 22px;
+}
+
+.nav-links a {
+    color: #2e7d32;                      /* green */
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: 0.25s ease;
+}
+
+.nav-links a:hover {
+    background: rgba(46, 125, 50, 0.12); /* soft green bg */
+    color: #1aaa52;
+    transform: translateY(-2px);
+}
+
+/* ================================
+   RESPONSIVE BREAKPOINT: 600px
+   ================================ */
+@media (max-width: 600px) {
+
+  /* APP CONTAINER STACKS */
+  .app {
+      flex-direction: column;
+      padding: 10px;
+  }
+
+  /* SIDEBAR BECOMES TOP MENU */
+  .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      top: 0;
+      margin-top: 90px; /* keep space for navbar */
+      box-shadow: none;
+      border-radius: 10px;
+  }
+
+  .sidebar nav .nav-link.clean {
+      padding: 12px;
+      font-size: 16px;
+  }
+
+  /* SEARCH + BUTTON STACK */
+  .topbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+  }
+
+  .topbar input {
+      width: 100% !important;
+  }
+
+  .topbar .d-flex {
+      width: 100%;
+      justify-content: space-between;
+  }
+
+  /* CARDS AND STATS FULL WIDTH */
+  .card-clean {
+      padding: 12px;
+  }
+
+  .stat {
+      min-width: 100%;
+      margin-bottom: 10px;
+  }
+
+  .card-clean .stat {
+      display: block;
+  }
+
+  .card-clean > div:last-child {
+      flex-direction: column;
+      width: 100%;
+  }
+
+  /* TABLE RESPONSIVE */
+  table {
+      font-size: 12px;
+  }
+
+  .table td, .table th {
+      padding: 6px;
+      white-space: nowrap;
+  }
+
+  /* NAVBAR SHRINK */
+  .navbar {
+      height: 65px;
+      padding: 0 16px;
+  }
+
+  .navbar .logo img {
+      height: 45px !important;
+  }
+
+  .nav-links a {
+      font-size: 13px;
+      padding: 6px 8px;
+  }
+}
+
+/* ================================
+   SCREEN ABOVE 600px (default)
+   No changes needed — your layout already works
+   ================================ */
+@media (min-width: 601px) {
+  .app {
+      flex-direction: row;
+  }
+}
+/* Sidebar collapse for screens < 600px */
+@media (max-width: 600px) {
+.navbar .logo {
+  display: none;
+}
+
+    .sidebar {
+        position: fixed;
+        top: 75px; /* below navbar */
+        left: -260px; /* hide sidebar initially */
+        width: 250px;
+        height: calc(100vh - 75px);
+        background: var(--card);
+        transition: left 0.3s ease;
+        z-index: 1001;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.open {
+        left: 0; /* show sidebar */
+    }
+
+    .app {
+        padding-left: 0;
+    }
+
+    /* Dim background when sidebar is open */
+    body.sidebar-open::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+}
+
+
+  </style>
+</head>
+<body>
+
+   <nav class="navbar">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="InnerBloom logo">
+            </div>
+<button id="sidebarToggle" class="btn btn-sm btn-outline-success d-md-none">
+    <i class="bi bi-list"></i>
+</button>
+
+            <div class="nav-links">
+
+                <a href="index.php">Home</a>
+                <a href="../assets/php/article.php">Articles</a>
+                <a href="../assets/php/video.php">Videos</a>
+                <a href="about.html">About us</a>
+                <a href="../assets/php/logout.php">Log out</a>
+            </div>
+        </nav>
+  <div class="app container-fluid">
+  
+    <aside class="sidebar">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="brand">InnerBloom</div>
+        <small class="small-muted"></small>
+      </div>
+
+      <div class="small-muted">Patient dashboard</div>
+
+      <nav class="mt-4">
+        <div class="mb-1"><a href="#" class="nav-link clean active" data-section="overview"><i class="bi bi-speedometer2"></i> Overview</a></div>
+         <div class="mb-1">
+      <a href="app.html" class="nav-link clean">
+        <i class="bi bi-calendar-check"></i> Appointments
+      </a>
+    </div>
+        <div class="mb-1"><a href="#" class="nav-link clean" data-section="reports"><i class="bi bi-graph-up"></i> Reports</a></div>
+        <div class="mb-1"><a href="#" class="nav-link clean" data-section="profile"><i class="bi bi-person-circle"></i> Profile</a></div>
+        <div class="mt-4"><a href="../assets/php/logout.php" id="logout" class="nav-link clean"><i class="bi bi-box-arrow-right"></i> Logout</a></div>
+      </nav>
+
+      <hr>
+
+      <div class="small-muted">Need help?</div>
+      <div class="muted">support@innerbloom.dz</div>
+      
+
+
+
+
+    </aside>
+
+    
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <span id="uName" style="visibility: hidden"></span></h3>
+          <div class="muted" id="uEmail" style="visibility: hidden"></div>
+        </div>
+
+        <div class="d-flex align-items-center gap-12">
+          <input id="search" class="form-control form-control-sm" placeholder="Search doctor, ..." style="width:260px">
+          <button id="newAppt" style="visibility: hidden" class="btn btn-success btn-sm"><i class="bi bi-plus-lg"></i> New</button>
+          <img id="avatar" class="avatar" src="" alt="avatar">
+        </div>
+      </div>
+
+      <!-- content root -->
+      <div id="root"></div>
+    </main>
+  </div>
+
+  <!-- Add/Edit appointment modal -->
+  <div class="modal fade" id="modalAppt" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3">
+        <h5 id="modalTitle">New appointment</h5>
+        <form id="formAppt" class="mt-3">
+          <input type="hidden" id="apptId">
+          <div class="mb-2"><label class="form-label small-muted">Doctor</label><input id="doctor" class="form-control" required></div>
+          <div class="mb-2"><label class="form-label small-muted">Reason</label><input id="reason" class="form-control" placeholder="Checkup, follow-up..."></div>
+          <div class="mb-2"><label class="form-label small-muted">Date & time</label><input id="datetime" type="datetime-local" class="form-control" required></div>
+          <div class="d-flex justify-content-end gap-2 mt-3"><button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- libs -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <script>
+// --- STATE ---
+let DATA = { user: {}, sessions: [] };
+let chartInst = null;
+const root = document.getElementById('root');
+const search = document.getElementById('search');
+
+// --- INITIAL LOAD ---
+async function loadAllData() {
+    try {
+        const response = await fetch('../assets/php/api.php');
+        const result = await response.json();
+        DATA.user = result.user;
+        DATA.sessions = result.sessions;
+
+        // Update Sidebar/Header
+        document.getElementById('uName').textContent = DATA.user.FIRST_NAME + ' ' + DATA.user.LAST_NAME;
+        document.getElementById('uEmail').textContent = DATA.user.EMAIL;
+        document.getElementById('avatar').src = 'https://img.icons8.com/pastel-glyph/128/12B886/user-male-circle.png';
+
+        const active = document.querySelector('.nav-link.clean.active')?.dataset.section || 'overview';
+        renderSection(active);
+    } catch (e) {
+        console.error("Database error:", e);
+    }
+}
+
+// --- SEARCH LOGIC ---
+search.addEventListener('input', () => {
+    const active = document.querySelector('.nav-link.clean.active').dataset.section;
+    renderSection(active);
+});
+
+// --- DATE FORMATTER ---
+function fDate(dt) {
+    const d = new Date(dt);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+}
+
+// --- SECTION: OVERVIEW ---
+function renderOverview() {
+    const searchTerm = search.value.trim().toLowerCase();
+    const mySessions = DATA.sessions.sort((a,b) => new Date(a.DATE) - new Date(b.DATE));
+    
+    const upcomingList = mySessions.filter(s => new Date(s.DATE) > new Date());
+    const completedCount = mySessions.filter(s => s.STATUS === 'completed').length;
+    const next = upcomingList[0];
+
+    root.innerHTML = `
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card-clean d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 style="margin:0">${DATA.user.FIRST_NAME} ${DATA.user.LAST_NAME}</h4>
+                        <div class="muted">Account • ${DATA.user.EMAIL}</div>
+                    </div>
+                    <div style="display:flex;gap:12px">
+                        <div class="stat"><p class="muted">Next</p><h3>${next ? fDate(next.DATE) : '—'}</h3></div>
+                        <div class="stat"><p class="muted">Upcoming</p><h3>${upcomingList.length}</h3></div>
+                        <div class="stat"><p class="muted">Completed</p><h3>${completedCount}</h3></div>
+                        <div class="stat"><p class="muted">Pending</p><h3>0</h3></div>
+
+                    </div>
+                </div>
+            </div>  
+
+            <div class="col-lg-8">
+                <div class="card-clean p-3">
+                    <h5 class="mb-3">Upcoming appointments</h5>
+                    <div id="listUpcoming"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card-clean p-3">
+                    <h6 style="margin:0">Activity Graph</h6>
+                    <canvas id="mini" height="160" class="mt-3"></canvas>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card-clean p-3">
+                    <h5 style="margin:0">History</h5>
+                    <div clnameass="table-responsive mt-3">
+                        <table class="table align-middle">
+                            <thead><tr><th>Doctor</th><th>Date</th><th>Reason</th><th>Status</th></tr></thead>
+                            <tbody>${mySessions.map(s => `<tr>
+                                <td>${s.doctor}</td>
+                                <td>${fDate(s.DATE)}</td>
+                                <td>${s.REASON||'—'}</td>
+                                <td><span class="badge-status ${s.STATUS==='pending'?'pending':s.STATUS==='completed'?'completed':'confirmed'}">${s.STATUS}</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary edit-btn" data-id="${s.id}">Edit</button></td>
+                                </tr>`).join('')}</tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    // Render the Small "Upcoming" cards with search filter
+    const upcomingEl = document.getElementById('listUpcoming');
+    const filteredUpcoming = upcomingList.filter(s => 
+        s.doctor.toLowerCase().includes(searchTerm) || s.REASON.toLowerCase().includes(searchTerm)
+    );
+
+    if (filteredUpcoming.length === 0) {
+        upcomingEl.innerHTML = '<div class="muted">No upcoming appointments found</div>';
+    } else {
+        upcomingEl.innerHTML = filteredUpcoming.map(s => `
+            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                <div>
+                    <div style="font-weight:700">${s.doctor}</div>
+                    <div class="muted">${fDate(s.DATE)} · ${s.REASON}</div>
+                </div>
+                <span class="badge-status ${s.STATUS}">${s.STATUS}</span>
+            </div>`).join('');
+    }
+
+    renderMiniChart();
+}
+
+// --- SECTION: APPOINTMENTS ---
+function renderAppointments() {
+    const searchTerm = search.value.trim().toLowerCase();
+    const rows = DATA.sessions.filter(s => 
+        s.doctor.toLowerCase().includes(searchTerm) || s.REASON.toLowerCase().includes(searchTerm)
+    ).map(s => `
+        <tr>
+            <td>${s.doctor}</td>
+            <td>${fDate(s.DATE)}</td>
+            <td>${s.REASON}</td>
+            <td><span class="badge-status ${s.STATUS}">${s.STATUS}</span></td>
+        </tr>`).join('');
+
+    root.innerHTML = `
+        <div class="card-clean p-3">
+            <h5 class="mb-3">All Appointments</h5>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead><tr><th>Doctor</th><th>Date</th><th>Reason</th><th>Status</th></tr></thead>
+                    <tbody>${rows || '<tr><td colspan="4" class="muted">No results</td></tr>'}</tbody>
+                </table>
+            </div>
+        </div>`;
+}
+
+// --- SECTION: PROFILE ---
+function renderProfile() {
+    root.innerHTML = `
+        <div class="card-clean p-3">
+            <h5>Profile Information</h5>
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="small-muted">First Name</label>
+                    <input id="p_fname" class="form-control" value="${DATA.user.FIRST_NAME}">
+                </div>
+                <div class="col-md-6">
+                    <label class="small-muted">Last Name</label>
+                    <input id="p_lname" class="form-control" value="${DATA.user.LAST_NAME}">
+                </div>
+                <div class="col-md-12">
+                    <label class="small-muted">Phone Number</label>
+                    <input id="p_phone" class="form-control" value="${DATA.user.PHONE_NUMBER}">
+                </div>
+                <div class="col-12 text-end">
+                    <button onclick="saveProfileChanges()" class="btn btn-primary btn-sm">Save to Database</button>
+                </div>
+            </div>
+        </div>`;
+}
+
+async function saveProfileChanges() {
+    const updated = {
+        fname: document.getElementById('p_fname').value,
+        lname: document.getElementById('p_lname').value,
+        phone: document.getElementById('p_phone').value
+    };
+    const res = await fetch('../assets/php/update_profile.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+    });
+    const result = await res.json();
+    if(result.success) { alert("Changes Saved!"); loadAllData(); }
+}
+
+// --- SECTION: SETTINGS ---
+function renderSettings() {
+    root.innerHTML = `
+        <div class="card-clean p-3">
+            <h5>Settings</h5>
+            <div class="mt-3">
+                <label class="form-label small-muted">Theme Preference</label>
+                <select id="themeSel" class="form-select">
+                    <option value="light">Light Mode</option>
+                    <option value="dark">Dark Mode</option>
+                </select>
+            </div>
+        </div>`;
+    
+    const sel = document.getElementById('themeSel');
+    sel.addEventListener('change', (e) => {
+        if(e.target.value === 'dark') document.documentElement.style.setProperty('--bg','#0b1220');
+        else document.documentElement.style.removeProperty('--bg');
+    });
+}
+
+function renderReports() {
+    // 1. Get stats from the real DB data (DATA.sessions)
+    // We match the status names to your SQL table ('completed', 'scheduled', 'pending')
+    const completed = DATA.sessions.filter(s => s.STATUS === 'completed').length;
+    const scheduled = DATA.sessions.filter(s => s.STATUS === 'scheduled').length;
+    
+    // Note: If you don't have a 'pending' status in your DB yet, it will just show 0
+    const pending = DATA.sessions.filter(s => s.STATUS === 'pending').length;
+
+    // 2. Inject the HTML (Same structure as your old one)
+    root.innerHTML = `
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card-clean p-3">
+                    <h6 style="margin:0">Summary</h6>
+                    <div class="mt-3">
+                        <p class="muted">Completed</p>
+                        <h3>${completed}</h3>
+                        <p class="muted">Pending: ${scheduled}</p>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-clean p-3">
+                    <h6 style="margin:0">Monthly trend</h6>
+                    <canvas id="repChart" height="160" class="mt-3"></canvas>
+                </div>
+            </div>
+        </div>`;
+
+    // 3. Keep the Chart logic Random (Dummy)
+    const labels = []; 
+    const pts = [];
+    for (let i = 5; i >= 0; i--) { 
+        const d = new Date(); 
+        d.setMonth(d.getMonth() - i); 
+        labels.push(d.toLocaleString(undefined, { month: 'short' })); 
+        pts.push(Math.floor(Math.random() * 4) + 1); 
+    }
+
+    // 4. Draw the Chart
+    const ctx = document.getElementById('repChart').getContext('2d');
+    if (chartInst) chartInst.destroy();
+    
+    chartInst = new Chart(ctx, { 
+        type: 'line', 
+        data: { 
+            labels, 
+            datasets: [{ 
+                data: pts, 
+                borderColor: 'rgba(0,184,148,0.9)', 
+                backgroundColor: 'rgba(0,184,148,0.08)', 
+                fill: true,
+                tension: 0.35 
+            }]
+        }, 
+        options: { 
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        } 
+    });
+}
+// --- CHART HELPER ---
+function renderMiniChart() {
+    const ctx = document.getElementById('mini').getContext('2d');
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const values = [2, 1, 0, 3, 2, 1, 1]; // Dummy data for visual
+    if (chartInst) chartInst.destroy();
+    chartInst = new Chart(ctx, { 
+        type:'bar', 
+        data:{ labels, datasets:[{ data:values, backgroundColor: '#00b894' }]},
+        options:{ plugins:{ legend:{ display:false } } }
+    });
+}
+
+// --- NAV HANDLERS ---
+ document.querySelectorAll('.nav-link.clean').forEach(a => {
+  if(a.dataset.section){  // ignore external links
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.nav-link.clean').forEach(n => n.classList.remove('active'));
+      a.classList.add('active');
+      renderSection(a.dataset.section);
+    });
+  }
+});
+
+function renderSection(section) {
+    if (section === 'overview') renderOverview();
+    else if (section === 'appointments') renderAppointments();
+    else if (section === 'profile') renderProfile();
+    else if (section === 'reports') renderReports();
+    else if (section === 'settings') renderSettings();
+}
+
+// Start the app
+loadAllData();
+
+
+
+
+
+
+
+
+  </script>
+  <script>
+const sidebar = document.querySelector('.sidebar');
+const toggleBtn = document.getElementById('sidebarToggle');
+
+toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+});
+</script>
+
+</body>
+<style>
+footer {
+  border: 2px solid ;
+  color: #1e4d2b;
+  border-radius: 7px;
+  background: #67926755;;
+}
+</style>
+<footer>
+        <center>
+            <table>
+                <tr>
+                    <td><img src="../assets/images/footerpic.png" alt="InnerBloom Logo" height="70"></td>
+                    <td rowspan="2">
+                        <pre>
+
+        Need help ?
+        ✆ Call us at <a href="tel:+213674674674"> +213 674 674 674</a>
+        📧Mail us at<a href="mailto::innerbloomdz@email.com">innerbloomdz@gmail.com</a>
+        available Sunday - Thursday, 09:00 am - 06:00pm 
+    </pre>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </footer>
+</html>
